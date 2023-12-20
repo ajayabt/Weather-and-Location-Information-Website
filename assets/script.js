@@ -36,3 +36,22 @@ function fetchNearbyWikipediaEntries(latitude, longitude, username) {
 fetchNearbyWikipediaEntries(latitude, longitude, userName);
 
 console.log(nameForWikiApi)
+
+//favourites button something like...
+
+//$(favButton).on(click, function)=> 
+// const favourites = [];
+// favourites.push[nameForWikiUrl];
+// localStorage.setItem('favourites', JSON.stringify(favourites))
+// 
+//Generate favourites cards function
+//JSON.parse(localStorage.getItem(favourites))
+// for each function to generate cards...
+// for each favourite => 
+
+// favouritesCard = $(cardElement)
+// favouritesCardTitle = $(<h2>).text(i)
+// favouritesCardImage =$(<img src ="img source from wikipedia API variable")
+
+//on click of card fetchAndDisplay information for card...so API chain is one function
+ 
