@@ -16,14 +16,15 @@
   map.addListener('click', function (event) {
       var latLng = event.latLng;
       console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
+      fetchNearbyWikipediaEntries(latLng.lat(), latLng.lng(), 'ajayabt')
   
   });
   
   }
 
    //geonames API variables
-   let latitude = 47; //from googlemaps API
-   let longitude = 9;  //from googlemaps API
+   let latitude = latLng.lat()
+   let longitude = latLng.lng()
    let userName = "ajayabt"; //API key
 
 
@@ -39,7 +40,8 @@ function fetchNearbyWikipediaEntries(latitude, longitude, username) {
         })
         .then(data => {
            console.log(data); // Logic here...
-          let nameForWikiApi = console.log(data.geonames[0].title)
+          let nameForWikiApi = data.geonames[0].title;
+          console.log(nameForWikiApi)
         })
         .catch(e => {
             console.error('Error fetching data: ', e);
@@ -72,41 +74,41 @@ console.log(nameForWikiApi)
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    const locations = document.querySelectorAll('.location');
-    const weatherInfo = document.getElementById('weatherInfo');
-    const apiKey = '6aa4598f48a0810a039e7c4a993d88c4'; 
-    const apiEndpoint = 'https://api.openweathermap.org/data/2.5/forecast';
+// document.addEventListener('DOMContentLoaded', function () {
+//     const locations = document.querySelectorAll('.location');
+//     const weatherInfo = document.getElementById('weatherInfo');
+//     const apiKey = '6aa4598f48a0810a039e7c4a993d88c4'; 
+//     const apiEndpoint = 'https://api.openweathermap.org/data/2.5/forecast';
 
-    locations.forEach(location => {
-        location.addEventListener('click', function () {
-            const locationName = this.getAttribute('data-location');
-            getWeatherInfo(locationName);
-        });
-    });
+//     locations.forEach(location => {
+//         location.addEventListener('click', function () {
+//             const locationName = this.getAttribute('data-location');
+//             getWeatherInfo(locationName);
+//         });
+//     });
 
-    function getWeatherInfo(locationName) {
-        const apiUrl = `${apiEndpoint}?q=${locationName}&appid=${apiKey}`;
+//     function getWeatherInfo(locationName) {
+//         const apiUrl = `${apiEndpoint}?q=${locationName}&appid=${apiKey}`;
 
-        // https://api.openweathermap.org/data/2.5/forecast?q=london&appid=6aa4598f48a0810a039e7c4a993d88c4
+//         // https://api.openweathermap.org/data/2.5/forecast?q=london&appid=6aa4598f48a0810a039e7c4a993d88c4
 
-        fetch(apiUrl)
-            .then(function (response) {
-                return response.json();
+//         fetch(apiUrl)
+//             .then(function (response) {
+//                 return response.json();
 
-            })
-            .then(function (data) {
+//             })
+//             .then(function (data) {
                 
-                const temperature = data.list[0].main.temp;
-                const description = data.list[0].weather[0].description;
-                weatherInfo.innerHTML = `<h2>${locationName}</h2>
-                                         <p>Temperature: ${temperature}°C</p>;
-                                         <p>Weather: ${description}</p>`;
-                                         console.log(temperature, description)
-            })
+//                 const temperature = data.list[0].main.temp;
+//                 const description = data.list[0].weather[0].description;
+//                 weatherInfo.innerHTML = `<h2>${locationName}</h2>
+//                                          <p>Temperature: ${temperature}°C</p>;
+//                                          <p>Weather: ${description}</p>`;
+//                                          console.log(temperature, description)
+//             })
 
-    }
-});
+//     }
+// });
 
-getWeatherInfo()
+// getWeatherInfo()
 
