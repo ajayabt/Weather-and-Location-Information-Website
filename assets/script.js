@@ -6,6 +6,20 @@
    // Name passed to weather API, call the weather
    
 
+   function initMap() {
+    var  map = new google.maps.Map(document.getElementById('map'), {
+          center: { lat: 53.5, lng: 2.4 },
+          zoom: 8,
+      });
+  
+  
+  map.addListener('click', function (event) {
+      var latLng = event.latLng;
+      console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
+  
+  });
+  
+  }
 
    //geonames API variables
    let latitude = 47; //from googlemaps API
