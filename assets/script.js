@@ -82,16 +82,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
             })
             .then(function (data) {
-                console.log;
+                
                 const temperature = data.list[0].main.temp;
                 const description = data.list[0].weather[0].description;
                 weatherInfo.innerHTML = `<h2>${locationName}</h2>
-                                         <p>Temperature: ${temperature}°C</p>
+                                         <p>Temperature: ${temperature}°C</p>;
                                          <p>Weather: ${description}</p>`;
+                                         console.log(temperature, description)
             })
 
     }
 });
 
-
+getWeatherInfo()
 
