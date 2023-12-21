@@ -55,3 +55,43 @@ console.log(nameForWikiApi)
 
 //on click of card fetchAndDisplay information for card...so API chain is one function
  
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const locations = document.querySelectorAll('.location');
+    const weatherInfo = document.getElementById('weatherInfo');
+    const apiKey = '6aa4598f48a0810a039e7c4a993d88c4'; 
+    const apiEndpoint = 'https://api.openweathermap.org/data/2.5/forecast';
+
+    locations.forEach(location => {
+        location.addEventListener('click', function () {
+            const locationName = this.getAttribute('data-location');
+            getWeatherInfo(locationName);
+        });
+    });
+
+    function getWeatherInfo(locationName) {
+        const apiUrl = `${apiEndpoint}?q=${locationName}&appid=${apiKey}`;
+
+        // https://api.openweathermap.org/data/2.5/forecast?q=london&appid=6aa4598f48a0810a039e7c4a993d88c4
+
+        fetch(apiUrl)
+            .then(function (response) {
+                return response.json();
+
+            })
+            .then(function (data) {
+                console.log;
+                const temperature = data.list[0].main.temp;
+                const description = data.list[0].weather[0].description;
+                weatherInfo.innerHTML = `<h2>${locationName}</h2>
+                                         <p>Temperature: ${temperature}°C</p>
+                                         <p>Weather: ${description}</p>`;
+            })
+
+    }
+});
+
+
+
