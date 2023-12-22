@@ -24,7 +24,7 @@ function initMap() {
 }
 //callback function due to asynchronicity, converts the lat and lon into a title name for wiki
 function fetchNearbyWikipediaEntries(latitude, longitude, username, callback) {
-    const geonamesQueryUrl = `http://api.geonames.org/findNearbyWikipediaJSON?lat=${latitude}&lng=${longitude}&username=${username}`;
+    const geonamesQueryUrl = `https://api.geonames.org/findNearbyWikipediaJSON?lat=${latitude}&lng=${longitude}&username=${username}`;
 
     fetch(geonamesQueryUrl)
         .then(response => {
