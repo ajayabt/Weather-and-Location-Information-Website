@@ -108,7 +108,33 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function fetchWikiInfo() {
-    const apiUrl = `https://www.mediawiki.org/w/api.php?action=query&prop=extracts|pageimages&titles=${nameForWikiApi}&pithumbsize=100`;
+function fetchCityData(cityName) {
+    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extracts|pageimages&exintro&titles=${nameForWikiApi}&redirects=1&pithumbsize=400`;
+
+    return fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const cityPage = Object.values(data.query.pages)[0];
+
+            if (!cityPage) {
+                throw new Error(`City not found: ${cityName}`);
+            }
+
+            const title = cityPage.title;
+            const info = cityPage.extract;
+            const image = cityPage.thumbnail;
+
+            console.log('Title:', title);
+            console.log('Info:', info);
+            console.log('Image:', image);
+
+
+            return { title, info, image };
+        })
+        .catch(error => {
+            console.error('Error fetching city data:', error.message);
+        });
 }
+
+fetchCityData(cityName);
 
