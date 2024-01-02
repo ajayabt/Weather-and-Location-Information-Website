@@ -106,6 +106,7 @@ function fetchWikipediaData(title, callback) {
         let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn').attr('data-title', title).attr('data-image', imageUrl);
             $('#saveButton').append(saveButton);
 
+
         }
    
 //save to local storage array for favourites
@@ -121,6 +122,15 @@ $(document).on('click', '.save-fav-btn', function() {
     let title = $(this).data('title');
     let imageUrl = $(this).data('image');
     saveToFavourites(title, imageUrl);
+    let banner = $('<div>') .text('Saved to Favourites').addClass('save-banner') 
+
+ 
+    $('body').append(banner);
+
+  
+    banner.fadeIn(500).delay(2000).fadeOut(500, function() {
+        $(this).remove(); 
+    });
 });
 //display favourites
 
@@ -181,6 +191,7 @@ $(document).on('click', '.favButton', function(event) {
 
 
 //clear favs button 
+
 $('#clearFavs').on('click', function() {
     localStorage.removeItem('favourites'); 
     displayFavourites(); 
