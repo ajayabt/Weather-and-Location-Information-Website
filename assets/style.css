@@ -1,38 +1,16 @@
 #map {
-<<<<<<< HEAD
-    height: 100%;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 0
-}
-
-#Web-Title {
-    z-index: 100;
-}
-
-.description {
-    z-index: 100;
-    position: relative;
-    background-color: aliceblue;
-    margin-left: 50px;
-    margin-right: 50px;
-    text-align: center;
-}
-
-.Location-info{
-    z-index: 100;
-    position: relative;
-    width: 30%;
-    height: 100%;
-    text-align: center;
-    margin: 0;
-
-}
-
-=======
     height: 800px;
 }
->>>>>>> 37e1002a3deee9839c86cbab23247eede8011971
+
+.save-banner {
+    position: fixed;
+    top: 50px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; 
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000; 
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
