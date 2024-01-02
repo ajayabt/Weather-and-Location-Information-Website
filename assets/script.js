@@ -1,9 +1,16 @@
 // 1. Map is loaded
-// the paramaters we'll need: where it shows initialy, 
-// output lon and lat on click pass to geonames
-// use geonames API to search wikipedia for nearby locations
-// wikipedia will need to return image, information and name
-// Name passed to weather API, call the weather
+   // the paramaters we'll need: where it shows initialy, 
+   // output lon and lat on click pass to geonames
+   // use geonames API to search wikipedia for nearby locations
+   // wikipedia will need to return image, information and name
+   // Name passed to weather API, call the weather
+     
+   $(document).ready(function(){
+    $("#myModal").modal('show');
+    $(".close").on("click", function() {
+        $("#myModal").modal('hide');
+    });
+});
 
 //google maps set up
 function initMap() {
@@ -12,9 +19,19 @@ function initMap() {
         center: { lat: 53.5, lng: 2.4 },
         zoom: 8,
     });
-    //event listener for click to output lat and lon
-    map.addListener('click', function (event) {
+
+//marker set up
+    var marker = new google.maps.Marker({
+        position: { lat: 0, lng: 0 },
+        map: map,
+        draggable: true, 
+        animation: google.maps.Animation.DROP 
+    });
+
+//event listener for click to output lat and lon
+    map.addListener('click', function(event) {
         var latLng = event.latLng;
+        marker.setPosition(event.latLng);
         console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
         //calling the functions defined later within the event listener,
         fetchNearbyWikipediaEntries(latLng.lat(), latLng.lng(), 'ajayabt', handleWikiData);
@@ -22,6 +39,7 @@ function initMap() {
         fetchAndDisplayWeather(latLng.lat(), latLng.lng());  // Fetch weather data based on lat and lng, see paramaters for function
     });
 }
+
 //callback function due to asynchronicity, converts the lat and lon into a title name for wiki
 function fetchNearbyWikipediaEntries(latitude, longitude, username, callback) {
     const geonamesQueryUrl = `https://secure.geonames.org/findNearbyWikipediaJSON?lat=${latitude}&lng=${longitude}&username=${username}`;
