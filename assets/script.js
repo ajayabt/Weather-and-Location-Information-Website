@@ -49,10 +49,10 @@ function fetchNearbyWikipediaEntries(latitude, longitude, username, callback) {
 //callback function so that the title can be accessed by wikipedia.
 function handleWikiData(title, latitude, longitude) {
     console.log("Received Title:", title);
-    fetchWikipediaData(title);  // Fetch Wikipedia data based on title
+    fetchWikipediaData(title, latitude, longitude);  // Fetch Wikipedia data based on title
 }
 //wiki API logic
-function fetchWikipediaData(title) {
+function fetchWikipediaData(title, callback) {
     const wikipediaApiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&titles=${encodeURIComponent(title)}&pithumbsize=100&origin=*`;
 
     fetch(wikipediaApiUrl)
@@ -71,25 +71,100 @@ function fetchWikipediaData(title) {
                 const extract = pageData.extract || "No extract available";
                 const imageUrl = pageData.thumbnail ? pageData.thumbnail.source : "";
                 
-                displayWikipediaData(extract, imageUrl);
+                displayWikipediaData(extract, imageUrl, title);
+                callback(extract, imageUrl);
             }
+            
         })
         .catch(e => {
             console.error('Error fetching Wikipedia data: ', e);
         });
         }
 //basic display funtion for the wiki content, function called above in the fetchWikipediaData block
-        function displayWikipediaData(extract, imageUrl) {
-
-            console.log(extract)
+        function displayWikipediaData(extract, imageUrl, title) {
+            console.log("Title in displayWikipediaData:", title);
+            console.log(extract);
             
+            $('#today').append($('<h1>').html(title))
             $('#wikipedia-content').html(extract);
         
             
             if (imageUrl) {
                 $('#wikipedia-image').attr('src', imageUrl);
-            }
+            };
+//save to favourites button rendering
+        $('#saveButton').empty()           
+        let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn').attr('data-title', title).attr('data-image', imageUrl);
+            $('#saveButton').append(saveButton);
+
         }
+   
+//save to local storage array for favourites
+function saveToFavourites(title, imageUrl) {
+            let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+            favourites.push({ title, imageUrl });
+            localStorage.setItem('favourites', JSON.stringify(favourites));
+            displayFavourites();  // Update favourites display
+        }
+
+//saveButton click event: 
+$(document).on('click', '.save-fav-btn', function() {
+    let title = $(this).data('title');
+    let imageUrl = $(this).data('image');
+    saveToFavourites(title, imageUrl);
+});
+//display favourites
+
+function displayFavourites() {
+    let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+    let favContainer = $('#favs');
+    favContainer.empty();
+    favourites.forEach(fav => {
+        let favCard = $('<div>').addClass('favourite-card card col-lg-3');
+        let favTitle = $('<h3>').addClass('card-title').text(fav.title);
+        let favImage = $('<img>').addClass('card-img-top').attr('src', fav.imageUrl);
+        let infoButton = $('<btn>').addClass('favButton btn btn-primary').text('Show Article').data('title', fav.title)
+        favCard.append(favTitle, favImage, infoButton);
+        favContainer.append(favCard);
+    });
+}
+//favourites card event listener=> display wikipedia information in
+$(document).on('click', '.favButton', function(event) {
+    event.preventDefault();
+    let title = $(this).data('title');
+    const wikipediaApiUrlModal = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&titles=${encodeURIComponent(title)}&pithumbsize=100&origin=*`;
+
+    fetch(wikipediaApiUrlModal)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data); // as the call function for wiki data above, however removing the display functions to stop it replacing existing content
+            if (data.query && data.query.pages) {
+                const pageId = Object.keys(data.query.pages)[0]; 
+                const pageData = data.query.pages[pageId];
+
+                const extract = pageData.extract || "No extract available";
+                const imageUrl = pageData.thumbnail ? pageData.thumbnail.source : "";
+                $('#wikiModalContent').html(extract);
+                $('#wikiModal').modal('show');
+                $('#wikiModalLabel').text(title);
+    
+            }
+    
+    });
+});
+
+
+//clear favs button 
+$('#clearFavs').on('click', function() {
+    localStorage.removeItem('favourites'); 
+    displayFavourites(); 
+});
+displayFavourites();
 //Fetch weather API
 function fetchAndDisplayWeather(latitude, longitude) {
     const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1a06838aa0ec5de32fa5b9b5de0234e2&units=metric`;
@@ -126,82 +201,5 @@ function displayWeather(forecastData) {
     currentWeatherContainer.append(nameDisplay, iconDisplay, dateAndTime, tempDisplay, humidityDisplay, windSpeedDisplay);
 }
 
-//favourites button something like...
 
-//$(favButton).on(click, function)=> 
-// const favourites = [];
-// favourites.push[nameForWikiUrl];
-// localStorage.setItem('favourites', JSON.stringify(favourites))
-// 
-//Generate favourites cards function
-//JSON.parse(localStorage.getItem(favourites))
-// for each function to generate cards...
-// for each favourite => 
-
-// favouritesCard = $(cardElement)
-// favouritesCardTitle = $(<h2>).text(i)
-// favouritesCardImage =$(<img src ="img source from wikipedia API variable")
-
-//on click of card fetchAndDisplay information for card...so API chain is one function
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     const locations = document.querySelectorAll('.location');
-//     const weatherInfo = document.getElementById('weatherInfo');
-//     const apiKey = '6aa4598f48a0810a039e7c4a993d88c4'; 
-//     const apiEndpoint = 'https://api.openweathermap.org/data/2.5/forecast';
-
-//     locations.forEach(location => {
-//         location.addEventListener('click', function () {
-//             const locationName = this.getAttribute('data-location');
-//             getWeatherInfo(locationName);
-//         });
-//     });
-
-//     function getWeatherInfo(locationName) {
-//         const apiUrl = `${apiEndpoint}?q=${locationName}&appid=${apiKey}`;
-
-//         // https://api.openweathermap.org/data/2.5/forecast?q=london&appid=6aa4598f48a0810a039e7c4a993d88c4
-
-//         fetch(apiUrl)
-//             .then(function (response) {
-//                 return response.json();
-
-//             })
-//             .then(function (data) {
-                
-//                 const temperature = data.list[0].main.temp;
-//                 const description = data.list[0].weather[0].description;
-//                 weatherInfo.innerHTML = `<h2>${locationName}</h2>
-//                                          <p>Temperature: ${temperature}°C</p>;
-//                                          <p>Weather: ${description}</p>`;
-//                                          console.log(temperature, description)
-//             })
-
-//     }
-// });
-
-// getWeatherInfo()
-
