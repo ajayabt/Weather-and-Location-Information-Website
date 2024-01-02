@@ -111,18 +111,34 @@ function fetchWikipediaData(title) {
 
 // fetchCityData(cityName);
 
-//basic display funtion for the wiki content, function called above in the fetchWikipediaData block
-        function displayWikipediaData(extract, imageUrl) {
 
-            console.log(extract)
-            
-            $('#wikipedia-content').html(extract);
-        
-            
-            if (imageUrl) {
-                $('#wikipedia-image').attr('src', imageUrl);
-            }
-        }
+// Display Wikipedia Data 
+function displayWikipediaData(extract, imageUrl) {
+    
+    const cardContainer = $('#cardContainer');
+
+    
+    const card = $('<div>').addClass('card');
+    const cardBody = $('<div>').addClass('card-body');
+    const cardTitle = $('<h5>').addClass('card-title').text('Wikipedia Information');
+    const cardText = $('<p>').addClass('card-text').html(extract);
+
+
+    if (imageUrl) {
+        const cardImage = $('<img>').addClass('card-img-top').attr('src', imageUrl).attr('alt', 'Wikipedia Image');
+        cardBody.append(cardImage);
+    }
+
+
+    cardBody.append(cardTitle, cardText);
+    card.append(cardBody);
+
+
+    cardContainer.empty().append(card);
+}
+
+
+
 //Fetch weather API
 function fetchAndDisplayWeather(latitude, longitude) {
     const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1a06838aa0ec5de32fa5b9b5de0234e2&units=metric`;
@@ -225,4 +241,3 @@ function displayWeather(forecastData) {
 // });
 
 // getWeatherInfo()
-
