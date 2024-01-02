@@ -3,6 +3,7 @@
 }
 
 
+
 p{ 
     font-family: Arial, Helvetica, sans-serif;
     color: #555;
@@ -61,10 +62,19 @@ h2{
     justify-content: center;
   }
   
-<<<<<<< HEAD
 
 #references {
     display: none;
 }
-=======
->>>>>>> 7ce7654 (background image)
+.save-banner {
+    position: fixed;
+    top: 50px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50; 
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000; 
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+}
