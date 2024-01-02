@@ -1,10 +1,10 @@
 // 1. Map is loaded
-   // the paramaters we'll need: where it shows initialy, 
-   // output lon and lat on click pass to geonames
-   // use geonames API to search wikipedia for nearby locations
-   // wikipedia will need to return image, information and name
-   // Name passed to weather API, call the weather
-   
+// the paramaters we'll need: where it shows initialy, 
+// output lon and lat on click pass to geonames
+// use geonames API to search wikipedia for nearby locations
+// wikipedia will need to return image, information and name
+// Name passed to weather API, call the weather
+
 //google maps set up
 function initMap() {
     //opening map view
@@ -12,13 +12,13 @@ function initMap() {
         center: { lat: 53.5, lng: 2.4 },
         zoom: 8,
     });
-//event listener for click to output lat and lon
-    map.addListener('click', function(event) {
+    //event listener for click to output lat and lon
+    map.addListener('click', function (event) {
         var latLng = event.latLng;
         console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
         //calling the functions defined later within the event listener,
         fetchNearbyWikipediaEntries(latLng.lat(), latLng.lng(), 'ajayabt', handleWikiData);
-    
+
         fetchAndDisplayWeather(latLng.lat(), latLng.lng());  // Fetch weather data based on lat and lng, see paramaters for function
     });
 }
@@ -33,11 +33,11 @@ function fetchNearbyWikipediaEntries(latitude, longitude, username, callback) {
             }
             return response.json();
         })
-  
+
         .then(data => {
             if (data.geonames && data.geonames.length > 0) {
                 let nameForWikiApi = data.geonames[0].title;
-                callback(nameForWikiApi, latitude, longitude); 
+                callback(nameForWikiApi, latitude, longitude);
             } else {
                 console.log('No nearby Wikipedia entries found.');
             }
@@ -65,59 +65,73 @@ function fetchWikipediaData(title, callback) {
         .then(data => {
             console.log(data); // wiki processing with Object.key as it needs to be dynamically generated=> not really sure on this bit!
             if (data.query && data.query.pages) {
-                const pageId = Object.keys(data.query.pages)[0]; 
+                const pageId = Object.keys(data.query.pages)[0];
                 const pageData = data.query.pages[pageId];
 
                 const extract = pageData.extract || "No extract available";
                 const imageUrl = pageData.thumbnail ? pageData.thumbnail.source : "";
-                
+
                 displayWikipediaData(extract, imageUrl, title);
-                
+
             }
-            
+
         })
         .catch(e => {
             console.error('Error fetching Wikipedia data: ', e);
         });
-        }
+}
 //basic display funtion for the wiki content, function called above in the fetchWikipediaData block
-        function displayWikipediaData(extract, imageUrl, title) {
-           //remove references and external links (they are not showing correctly and look messy!)
-            let tempDiv = document.createElement('div');
-            tempDiv.innerHTML = extract;
+function displayWikipediaData(extract, imageUrl, title) {
+    // remove references and external links (they are not showing correctly and look messy!)
+    let tempDiv = document.createElement('div');
+    tempDiv.innerHTML = extract;
 
-            $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function() {
-                $(this).nextUntil('h2').remove(); 
-                $(this).remove();
-            });
-            let editedExtract = tempDiv.innerHTML
-            console.log("Title in displayWikipediaData:", title);
-            console.log(editedExtract);
-            
-            $('#today').append($('<h1>').html(title))
-            $('#wikipedia-content').html(editedExtract);
-        
-            
-            if (imageUrl) {
-                $('#wikipedia-image').attr('src', imageUrl);
-            };
+    $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function () {
+        $(this).nextUntil('h2').remove();
+        $(this).remove();
+    });
+    let editedExtract = tempDiv.innerHTML;
+
+    // Create Bootstrap row and columns
+    let row = $('<div>').addClass('row');
+
+    // Left column
+    let leftColumn = $('<div>').addClass('col-md-6');
+    let titleElement = $('<h1>').html(title);
+    let contentElement = $('<div>').html(editedExtract);
+
+    leftColumn.append(titleElement, contentElement);
+
+    // Right column
+    let rightColumn = $('<div>').addClass('col-md-6');
+    let imageElement = $('<img>').addClass('img-fluid').attr('src', imageUrl);
+
+    rightColumn.append(imageElement);
+
+    // Append columns
+    row.append(leftColumn, rightColumn);
+
+
+    $('#wikipedia-content').html(row);
+}
+
 //save to favourites button rendering
-        $('#saveButton').empty()           
-        let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn').attr('data-title', title).attr('data-image', imageUrl);
-            $('#saveButton').append(saveButton);
+$('#saveButton').empty()
+let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn').attr('data-title', title).attr('data-image', imageUrl);
+$('#saveButton').append(saveButton);
 
-        }
-   
+
+
 //save to local storage array for favourites
 function saveToFavourites(title, imageUrl) {
-            let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
-            favourites.push({ title, imageUrl });
-            localStorage.setItem('favourites', JSON.stringify(favourites));
-            displayFavourites();  // Update favourites display
-        }
+    let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
+    favourites.push({ title, imageUrl });
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+    displayFavourites();  // Update favourites display
+}
 
 //saveButton click event: 
-$(document).on('click', '.save-fav-btn', function() {
+$(document).on('click', '.save-fav-btn', function () {
     let title = $(this).data('title');
     let imageUrl = $(this).data('image');
     saveToFavourites(title, imageUrl);
@@ -138,7 +152,7 @@ function displayFavourites() {
     });
 }
 //favourites card event listener=> display wikipedia information in
-$(document).on('click', '.favButton', function(event) {
+$(document).on('click', '.favButton', function (event) {
     event.preventDefault();
     let title = $(this).data('title');
     const wikipediaApiUrlModal = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&titles=${encodeURIComponent(title)}&pithumbsize=100&origin=*`;
@@ -153,7 +167,7 @@ $(document).on('click', '.favButton', function(event) {
         .then(data => {
             console.log(data); // as the call function for wiki data above, however removing the display functions to stop it replacing existing content
             if (data.query && data.query.pages) {
-                const pageId = Object.keys(data.query.pages)[0]; 
+                const pageId = Object.keys(data.query.pages)[0];
                 const pageData = data.query.pages[pageId];
 
                 const extract = pageData.extract || "No extract available";
@@ -161,9 +175,9 @@ $(document).on('click', '.favButton', function(event) {
 
                 let tempDiv = document.createElement('div');
                 tempDiv.innerHTML = extract;
-    
-                $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("Gallery"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function() {
-                    $(this).nextUntil('h2').remove(); 
+
+                $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("Gallery"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function () {
+                    $(this).nextUntil('h2').remove();
                     $(this).remove();
                 });
                 let editedExtract = tempDiv.innerHTML
@@ -173,17 +187,17 @@ $(document).on('click', '.favButton', function(event) {
                 $('#wikiModalContent').html(editedExtract);
                 $('#wikiModal').modal('show');
                 $('#wikiModalLabel').text(title);
-    
+
             }
-    
-    });
+
+        });
 });
 
 
 //clear favs button 
-$('#clearFavs').on('click', function() {
-    localStorage.removeItem('favourites'); 
-    displayFavourites(); 
+$('#clearFavs').on('click', function () {
+    localStorage.removeItem('favourites');
+    displayFavourites();
 });
 displayFavourites();
 //Fetch weather API
@@ -223,4 +237,4 @@ function displayWeather(forecastData) {
 }
 
 
- 
+
