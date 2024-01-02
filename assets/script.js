@@ -72,7 +72,7 @@ function fetchWikipediaData(title, callback) {
                 const imageUrl = pageData.thumbnail ? pageData.thumbnail.source : "";
                 
                 displayWikipediaData(extract, imageUrl, title);
-                callback(extract, imageUrl);
+                
             }
             
         })
@@ -82,11 +82,20 @@ function fetchWikipediaData(title, callback) {
         }
 //basic display funtion for the wiki content, function called above in the fetchWikipediaData block
         function displayWikipediaData(extract, imageUrl, title) {
+           //remove references and external links (they are not showing correctly and look messy!)
+            let tempDiv = document.createElement('div');
+            tempDiv.innerHTML = extract;
+
+            $(tempDiv).find('h2:contains("References"), h2:contains("External links")').each(function() {
+                $(this).nextUntil('h2').remove(); 
+                $(this).remove();
+            });
+            let editedExtract = tempDiv.innerHTML
             console.log("Title in displayWikipediaData:", title);
-            console.log(extract);
+            console.log(editedExtract);
             
             $('#today').append($('<h1>').html(title))
-            $('#wikipedia-content').html(extract);
+            $('#wikipedia-content').html(editedExtract);
         
             
             if (imageUrl) {
@@ -149,7 +158,19 @@ $(document).on('click', '.favButton', function(event) {
 
                 const extract = pageData.extract || "No extract available";
                 const imageUrl = pageData.thumbnail ? pageData.thumbnail.source : "";
-                $('#wikiModalContent').html(extract);
+
+                let tempDiv = document.createElement('div');
+                tempDiv.innerHTML = extract;
+    
+                $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("Gallery")').each(function() {
+                    $(this).nextUntil('h2').remove(); 
+                    $(this).remove();
+                });
+                let editedExtract = tempDiv.innerHTML
+                console.log("Title in displayWikipediaData:", title);
+                console.log(editedExtract);
+
+                $('#wikiModalContent').html(editedExtract);
                 $('#wikiModal').modal('show');
                 $('#wikiModalLabel').text(title);
     
