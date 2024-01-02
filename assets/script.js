@@ -86,7 +86,7 @@ function fetchWikipediaData(title, callback) {
             let tempDiv = document.createElement('div');
             tempDiv.innerHTML = extract;
 
-            $(tempDiv).find('h2:contains("References"), h2:contains("External links")').each(function() {
+            $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function() {
                 $(this).nextUntil('h2').remove(); 
                 $(this).remove();
             });
@@ -162,7 +162,7 @@ $(document).on('click', '.favButton', function(event) {
                 let tempDiv = document.createElement('div');
                 tempDiv.innerHTML = extract;
     
-                $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("Gallery")').each(function() {
+                $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("Gallery"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function() {
                     $(this).nextUntil('h2').remove(); 
                     $(this).remove();
                 });
