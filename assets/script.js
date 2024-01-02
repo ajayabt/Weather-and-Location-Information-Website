@@ -4,14 +4,7 @@
    // use geonames API to search wikipedia for nearby locations
    // wikipedia will need to return image, information and name
    // Name passed to weather API, call the weather
-     
-   $(document).ready(function(){
-    $("#myModal").modal('show');
-    $(".close").on("click", function() {
-        $("#myModal").modal('hide');
-    });
-});
-
+   
 //google maps set up
 function initMap() {
     //opening map view
@@ -19,19 +12,9 @@ function initMap() {
         center: { lat: 53.5, lng: 2.4 },
         zoom: 8,
     });
-
-//marker set up
-    var marker = new google.maps.Marker({
-        position: { lat: 0, lng: 0 },
-        map: map,
-        draggable: true, 
-        animation: google.maps.Animation.DROP 
-    });
-
 //event listener for click to output lat and lon
     map.addListener('click', function(event) {
         var latLng = event.latLng;
-        marker.setPosition(event.latLng);
         console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
         //calling the functions defined later within the event listener,
         fetchNearbyWikipediaEntries(latLng.lat(), latLng.lng(), 'ajayabt', handleWikiData);
@@ -39,7 +22,6 @@ function initMap() {
         fetchAndDisplayWeather(latLng.lat(), latLng.lng());  // Fetch weather data based on lat and lng, see paramaters for function
     });
 }
-
 //callback function due to asynchronicity, converts the lat and lon into a title name for wiki
 function fetchNearbyWikipediaEntries(latitude, longitude, username, callback) {
     const geonamesQueryUrl = `https://secure.geonames.org/findNearbyWikipediaJSON?lat=${latitude}&lng=${longitude}&username=${username}`;
@@ -140,6 +122,9 @@ $('#saveButton').append(saveButton);
 
 
 
+
+        }
+   
 //save to local storage array for favourites
 function saveToFavourites(title, imageUrl) {
     let favourites = JSON.parse(localStorage.getItem('favourites')) || [];
@@ -153,6 +138,15 @@ $(document).on('click', '.save-fav-btn', function () {
     let title = $(this).data('title');
     let imageUrl = $(this).data('image');
     saveToFavourites(title, imageUrl);
+    let banner = $('<div>') .text('Saved to Favourites').addClass('save-banner') 
+
+ 
+    $('body').append(banner);
+
+  
+    banner.fadeIn(500).delay(2000).fadeOut(500, function() {
+        $(this).remove(); 
+    });
 });
 //display favourites
 
@@ -213,9 +207,10 @@ $(document).on('click', '.favButton', function (event) {
 
 
 //clear favs button 
-$('#clearFavs').on('click', function () {
-    localStorage.removeItem('favourites');
-    displayFavourites();
+
+$('#clearFavs').on('click', function() {
+    localStorage.removeItem('favourites'); 
+    displayFavourites(); 
 });
 displayFavourites();
 //Fetch weather API
