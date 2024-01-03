@@ -93,8 +93,8 @@ function fetchWikipediaData(title, callback) {
             let editedExtract = tempDiv.innerHTML
             console.log("Title in displayWikipediaData:", title);
             console.log(editedExtract);
-            
-            $('#today').append($('<h1>').html(title))
+            $('#today').empty();
+            $('#today').append($('<h1>').html(title));
             $('#wikipedia-content').html(editedExtract);
         
             
@@ -105,8 +105,6 @@ function fetchWikipediaData(title, callback) {
         $('#saveButton').empty()           
         let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn btn btn-primary').attr('data-title', title).attr('data-image', imageUrl);
             $('#saveButton').append(saveButton);
-
-
         }
    
 //save to local storage array for favourites
@@ -167,8 +165,11 @@ function displayFavourites() {
         favContainer.append(favCard);
         $('.favsNavBar').show();
         $('#clearFavs').show();
+        
+        ;
     });
 }
+
 
 //favourites card event listener=> display wikipedia information in
 $(document).on('click', '.favButton', function(event) {
@@ -235,7 +236,7 @@ function fetchAndDisplayWeather(latitude, longitude) {
 }
 
 
-//straight forward display weather function
+//Pop up weather function to display over map
 
 function displayWeather(forecastData) {
     let weatherIcon = forecastData.weather[0].icon;
@@ -245,11 +246,13 @@ function displayWeather(forecastData) {
     let tempDisplay = $('<h2>').text('Current temperature: ' + forecastData.main.temp.toFixed(1) + ' \u00B0C');
     let humidityDisplay = $('<h2>').text('Humidity: ' + forecastData.main.humidity.toFixed(1) + '%');
     let windSpeedDisplay = $('<h2>').text('Wind speed: ' + forecastData.wind.speed.toFixed(1) + ' mph');
+    let closeForWiki = $('<h2>').text('Close and scroll down for some information about the area').addClass('closeForWiki')
+ 
+    let weatherModalBody = $('#weatherModalBody').addClass('weatherModalText');
+    weatherModalBody.empty();
+    weatherModalBody.append(nameDisplay, iconDisplay, dateAndTime, tempDisplay, humidityDisplay, windSpeedDisplay, closeForWiki);
 
-    let currentWeatherContainer = $('#today');
-    currentWeatherContainer.empty();
-    currentWeatherContainer.append(nameDisplay, iconDisplay, dateAndTime, tempDisplay, humidityDisplay, windSpeedDisplay);
+    
+    $('#weatherModal').modal('show');
 }
 
-
- 
