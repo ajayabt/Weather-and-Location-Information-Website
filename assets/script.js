@@ -188,7 +188,7 @@ function displayFavourites() {
         let favCard = $('<div>').addClass('favourite-card card col-lg-4');
         let favTitle = $('<h3>').addClass('card-title').text(fav.title);
 
-        let favImageSrc = fav.imageUrl || 'path/to/your/placeholder.png';
+        let favImageSrc = fav.imageUrl || 'https://placehold.co/600x400?text=No+Wikipedia+Image';
         let favImage = $('<div>')
             .addClass('card-img-top')
             .css('background-image', `url(${favImageSrc})`);
