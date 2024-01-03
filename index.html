@@ -9,31 +9,32 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Anton|Jura&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/dayjs.min.js"></script>
 </head>
 
 <body>
     <header>
-        <div class="Web-Title" style="color: rgb(99, 27, 125); text-size-adjust: 50px; text-align: center;">
-            <h1> title</h1>
-        </div>
+            <div class="Web-Title customNav">
+              <h1> WeatherWise Nomads</h1>
+            </div>
+          </header>
+          </br>
+          <div class="p-5 mb-4 bg-body-tertiary rounded-3 rockBackground">
+            <div class="container-fluid py-5 jumboCopy">
+              <h1 class="display-5 fw-bold"> Your Weather Guide </h1>
+              <span class="col-md-12 fs-4" id="slogan">Welcome to our innovative weather website, where exploring the world’s
+                 weather is just a click away! Our interactive world map allows you to seamlessly navigate through different
+                 locations, providing you with up-to-date weather information and a unique twist – facts from Wikipedia
+                 for a deeper dive into the local culture and geography.</span>
+            </div>
+          </div>
 
     </header>
-    </br>
-
-
+        <!-- <h3 class="favPlacesTitle">
+            My Favourite Places
+            <button id="clearFavs" class = "btn btn-primary">Clear Favourites</button>  
+        </h3> -->
+        
     
-    
-    <div class="p-5 mb-4 bg-body-tertiary rounded-3 rockBackground">
-        <div class="container-fluid py-5 jumboCopy">
-            <h1 class="display-5 fw-bold" style="color: rgb(101, 63, 150); text-align: center" >WeatherWise Nomads</h1>
-            <p class="col-md-12 fs-4">This is the digital equivilant of throwing a dart at an atlas! Click a location on the map to see the weather for that area and the nearest notable location (notable meaning it has a wikipedia article!).</p>
-        </div>
-    </div>
-
-    <button id="clearFavs" class="btn btn-primary">Clear Favourites</button>
-    <div id="favs" class="row">
-
     </div>
 
     <div class="modal fade" id="wikiModal" tabindex="-1" role="dialog" aria-labelledby="wikiModalLabel" aria-hidden="true">
@@ -52,10 +53,7 @@
         </div>
       </div>
 
-    <div id="worldMap" class="map">
-        <div class="location" data-location="new-york"></div>
-        <div class="location" data-location="london"></div>
-    </div>
+  
     <div id="weatherInfo" class="info">
     </div>
 
@@ -66,9 +64,21 @@
     <img id="wikipedia-image"></img>
     <div id="wikipedia-content"></div>
 
-    <div id="saveButton"></div>
-
+    <div class="card-deck">
+        
+   
+        
     
+    <nav id= favsNav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <div class="favsNavBar" href="#">My Favourites</div>
+          <button id="clearFavs" class = "btn btn-primary clearFavsBtn">Clear Favourites</button>
+          </div>
+        </div>
+      </nav>
+      <div id="favs" class="row">
+    </div>
+    <div id="saveButton"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>

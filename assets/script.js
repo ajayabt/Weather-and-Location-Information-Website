@@ -116,11 +116,9 @@ function displayWikipediaData(extract, imageUrl, title) {
 }
 
 //save to favourites button rendering
-$('#saveButton').empty()
-let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn').attr('data-title', title).attr('data-image', imageUrl);
-$('#saveButton').append(saveButton);
-
-
+        $('#saveButton').empty()           
+        let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn btn btn-primary').attr('data-title', title).attr('data-image', imageUrl);
+            $('#saveButton').append(saveButton);
 
 
         }
@@ -134,7 +132,8 @@ function saveToFavourites(title, imageUrl) {
 }
 
 //saveButton click event: 
-$(document).on('click', '.save-fav-btn', function () {
+$(document).on('click', '.save-fav-btn', function() {
+    
     let title = $(this).data('title');
     let imageUrl = $(this).data('image');
     saveToFavourites(title, imageUrl);
@@ -147,6 +146,18 @@ $(document).on('click', '.save-fav-btn', function () {
     banner.fadeIn(500).delay(2000).fadeOut(500, function() {
         $(this).remove(); 
     });
+    $('#clearFavs').show()
+    $('.favsNavBar').show();
+    
+    
+});
+//clear favs button 
+
+$('#clearFavs').on('click', function() {
+    localStorage.removeItem('favourites'); 
+    $('#clearFavs').hide();
+    $('.favsNavBar').hide()
+    displayFavourites();
 });
 //display favourites
 
@@ -157,12 +168,22 @@ function displayFavourites() {
     favourites.forEach(fav => {
         let favCard = $('<div>').addClass('favourite-card card col-lg-3');
         let favTitle = $('<h3>').addClass('card-title').text(fav.title);
-        let favImage = $('<img>').addClass('card-img-top').attr('src', fav.imageUrl);
-        let infoButton = $('<btn>').addClass('favButton btn btn-primary').text('Show Article').data('title', fav.title)
+       
+        let favImageSrc = fav.imageUrl || 'path/to/your/placeholder.png';
+        let favImage = $('<div>') 
+                          .addClass('card-img-top')
+                          .css('background-image', `url(${favImageSrc})`);
+        let infoButton = $('<button>') 
+                          .addClass('favButton btn btn-primary')
+                          .text('Show Article')
+                          .data('title', fav.title);
         favCard.append(favTitle, favImage, infoButton);
         favContainer.append(favCard);
+        $('.favsNavBar').show();
+        $('#clearFavs').show();
     });
 }
+
 //favourites card event listener=> display wikipedia information in
 $(document).on('click', '.favButton', function (event) {
     event.preventDefault();
@@ -206,12 +227,7 @@ $(document).on('click', '.favButton', function (event) {
 });
 
 
-//clear favs button 
 
-$('#clearFavs').on('click', function() {
-    localStorage.removeItem('favourites'); 
-    displayFavourites(); 
-});
 displayFavourites();
 //Fetch weather API
 function fetchAndDisplayWeather(latitude, longitude) {
