@@ -80,6 +80,7 @@ function fetchWikipediaData(title, callback) {
             console.error('Error fetching Wikipedia data: ', e);
         });
 }
+
 //basic display funtion for the wiki content, function called above in the fetchWikipediaData block
 function displayWikipediaData(extract, imageUrl, title) {
     // remove references and external links (they are not showing correctly and look messy!)
@@ -122,28 +123,6 @@ function displayWikipediaData(extract, imageUrl, title) {
 
     $('#wikipedia-content').html(card);
 }
-
-
-$(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function () {
-    $(this).nextUntil('h2').remove();
-    $(this).remove();
-});
-let editedExtract = tempDiv.innerHTML
-console.log("Title in displayWikipediaData:", title);
-console.log(editedExtract);
-$('#today').empty();
-$('#today').append($('<h1>').html(title));
-$('#wikipedia-content').html(editedExtract);
-
-
-if (imageUrl) {
-    $('#wikipedia-image').attr('src', imageUrl);
-};
-//save to favourites button rendering
-$('#saveButton').empty()
-let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn btn btn-primary').attr('data-title', title).attr('data-image', imageUrl);
-$('#saveButton').append(saveButton);
-
 
 //save to local storage array for favourites
 function saveToFavourites(title, imageUrl) {
@@ -293,4 +272,3 @@ function displayWeather(forecastData) {
 
     $('#weatherModal').modal('show');
 }
-
