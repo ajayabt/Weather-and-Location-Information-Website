@@ -4,14 +4,7 @@
    // use geonames API to search wikipedia for nearby locations
    // wikipedia will need to return image, information and name
    // Name passed to weather API, call the weather
-     
-   $(document).ready(function(){
-    $("#myModal").modal('show');
-    $(".close").on("click", function() {
-        $("#myModal").modal('hide');
-    });
-});
-
+   
 //google maps set up
 function initMap() {
     //opening map view
@@ -20,18 +13,18 @@ function initMap() {
         zoom: 8,
     });
 
+
 //marker set up
-    var marker = new google.maps.Marker({
-        position: { lat: 0, lng: 0 },
-        map: map,
-        draggable: true, 
-        animation: google.maps.Animation.DROP 
-    });
+var marker = new google.maps.Marker({
+    position: { lat: 0, lng: 0 },
+    map: map,
+    draggable: true, 
+    animation: google.maps.Animation.DROP 
+});
 
 //event listener for click to output lat and lon
     map.addListener('click', function(event) {
         var latLng = event.latLng;
-        marker.setPosition(event.latLng);
         console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
         //calling the functions defined later within the event listener,
         fetchNearbyWikipediaEntries(latLng.lat(), latLng.lng(), 'ajayabt', handleWikiData);
@@ -39,7 +32,6 @@ function initMap() {
         fetchAndDisplayWeather(latLng.lat(), latLng.lng());  // Fetch weather data based on lat and lng, see paramaters for function
     });
 }
-
 //callback function due to asynchronicity, converts the lat and lon into a title name for wiki
 function fetchNearbyWikipediaEntries(latitude, longitude, username, callback) {
     const geonamesQueryUrl = `https://secure.geonames.org/findNearbyWikipediaJSON?lat=${latitude}&lng=${longitude}&username=${username}`;
@@ -69,6 +61,7 @@ function handleWikiData(title, latitude, longitude) {
     console.log("Received Title:", title);
     fetchWikipediaData(title, latitude, longitude);  // Fetch Wikipedia data based on title
 }
+
 //wiki API logic
 function fetchWikipediaData(title, callback) {
     const wikipediaApiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&titles=${encodeURIComponent(title)}&pithumbsize=100&origin=*`;
@@ -98,31 +91,33 @@ function fetchWikipediaData(title, callback) {
             console.error('Error fetching Wikipedia data: ', e);
         });
         }
-//basic display funtion for the wiki content, function called above in the fetchWikipediaData block
-        function displayWikipediaData(extract, imageUrl, title) {
-           //remove references and external links (they are not showing correctly and look messy!)
-            let tempDiv = document.createElement('div');
-            tempDiv.innerHTML = extract;
 
-            $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function() {
-                $(this).nextUntil('h2').remove(); 
-                $(this).remove();
-            });
-            let editedExtract = tempDiv.innerHTML
-            console.log("Title in displayWikipediaData:", title);
-            console.log(editedExtract);
-            
-            $('#today').append($('<h1>').html(title))
-            $('#wikipedia-content').html(editedExtract);
-        
-            
-            if (imageUrl) {
-                $('#wikipedia-image').attr('src', imageUrl);
-            };
-//save to favourites button rendering
+        //basic display funtion for the wiki content, function called above in the fetchWikipediaData block
+        function displayWikipediaData(extract, imageUrl, title) {
+            //remove references and external links (they are not showing correctly and look messy!)
+             let tempDiv = document.createElement('div');
+             tempDiv.innerHTML = extract;
+ 
+             $(tempDiv).find('h2:contains("References"), h2:contains("External links"), h2:contains("images"), h2:contains("Gallery"), h2:contains("Notes")').each(function() {
+                 $(this).nextUntil('h2').remove(); 
+                 $(this).remove();
+             });
+             let editedExtract = tempDiv.innerHTML
+             console.log("Title in displayWikipediaData:", title);
+             console.log(editedExtract);
+             
+             $('#today').append($('<h1>').html(title))
+             $('#wikipedia-content').html(editedExtract);
+         
+             
+             if (imageUrl) {
+                 $('#wikipedia-image').attr('src', imageUrl);
+             };
+             //save to favourites button rendering
         $('#saveButton').empty()           
         let saveButton = $('<button>').text('Save to Favourites').addClass('save-fav-btn').attr('data-title', title).attr('data-image', imageUrl);
             $('#saveButton').append(saveButton);
+
 
         }
    
@@ -134,12 +129,22 @@ function saveToFavourites(title, imageUrl) {
             displayFavourites();  // Update favourites display
         }
 
-//saveButton click event: 
+        //saveButton click event: 
 $(document).on('click', '.save-fav-btn', function() {
     let title = $(this).data('title');
     let imageUrl = $(this).data('image');
     saveToFavourites(title, imageUrl);
+    let banner = $('<div>') .text('Saved to Favourites').addClass('save-banner') 
+
+ 
+    $('body').append(banner);
+
+  
+    banner.fadeIn(500).delay(2000).fadeOut(500, function() {
+        $(this).remove(); 
+    });
 });
+
 //display favourites
 
 function displayFavourites() {
@@ -197,8 +202,8 @@ $(document).on('click', '.favButton', function(event) {
     });
 });
 
-
 //clear favs button 
+
 $('#clearFavs').on('click', function() {
     localStorage.removeItem('favourites'); 
     displayFavourites(); 
@@ -223,7 +228,6 @@ function fetchAndDisplayWeather(latitude, longitude) {
         });
 }
 
-
 //straight forward display weather function
 
 function displayWeather(forecastData) {
@@ -240,5 +244,3 @@ function displayWeather(forecastData) {
     currentWeatherContainer.append(nameDisplay, iconDisplay, dateAndTime, tempDisplay, humidityDisplay, windSpeedDisplay);
 }
 
-
- 
