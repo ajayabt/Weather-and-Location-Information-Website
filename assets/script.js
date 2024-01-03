@@ -5,6 +5,12 @@
 // wikipedia will need to return image, information and name
 // Name passed to weather API, call the weather
 
+   // the paramaters we'll need: where it shows initialy, 
+   // output lon and lat on click pass to geonames
+   // use geonames API to search wikipedia for nearby locations
+   // wikipedia will need to return image, information and name
+   // Name passed to weather API, call the weather
+   
 //google maps set up
 function initMap() {
     //opening map view
@@ -19,8 +25,9 @@ function initMap() {
         draggable: true, 
         animation: google.maps.Animation.DROP 
     });
-    //event listener for click to output lat and lon
-    map.addListener('click', function (event) {
+   
+//event listener for click to output lat and lon
+    map.addListener('click', function(event) {
         var latLng = event.latLng;
         marker.setPosition(event.latLng);
         console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
@@ -60,6 +67,7 @@ function handleWikiData(title, latitude, longitude) {
     console.log("Received Title:", title);
     fetchWikipediaData(title, latitude, longitude);  // Fetch Wikipedia data based on title
 }
+
 //wiki API logic
 function fetchWikipediaData(title, callback) {
     const wikipediaApiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&titles=${encodeURIComponent(title)}&pithumbsize=600&origin=*`;
@@ -169,6 +177,7 @@ $('#clearFavs').on('click', function () {
     $('.favsNavBar').hide()
     displayFavourites();
 });
+
 //display favourites
 
 function displayFavourites() {
@@ -240,7 +249,6 @@ $(document).on('click', '.favButton', function (event) {
 });
 
 
-
 displayFavourites();
 //Fetch weather API
 function fetchAndDisplayWeather(latitude, longitude) {
@@ -277,7 +285,5 @@ function displayWeather(forecastData) {
     let weatherModalBody = $('#weatherModalBody').addClass('weatherModalText');
     weatherModalBody.empty();
     weatherModalBody.append(nameDisplay, iconDisplay, dateAndTime, tempDisplay, humidityDisplay, windSpeedDisplay, closeForWiki);
-
-
-    $('#weatherModal').modal('show');
+   $('#weatherModal').modal('show');
 }
