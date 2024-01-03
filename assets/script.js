@@ -12,10 +12,19 @@ function initMap() {
         center: { lat: 53.5, lng: 2.4 },
         zoom: 8,
     });
+
+    var marker = new google.maps.Marker({
+        position: { lat: 0, lng: 0 },
+        map: map,
+        draggable: true, 
+        animation: google.maps.Animation.DROP 
+    });
     //event listener for click to output lat and lon
     map.addListener('click', function (event) {
         var latLng = event.latLng;
+        marker.setPosition(event.latLng);
         console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
+    
         //calling the functions defined later within the event listener,
         fetchNearbyWikipediaEntries(latLng.lat(), latLng.lng(), 'ajayabt', handleWikiData);
 
