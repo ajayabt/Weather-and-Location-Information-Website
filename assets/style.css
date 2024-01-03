@@ -66,6 +66,8 @@ h2{
     background-color: transparent !important;
     background-size: cover;
     z-index: 20;
+    display: flex;
+    justify-content: center;
 }  
 
 .rockBackground {
@@ -79,14 +81,14 @@ h2{
   }
   
 .favourite-card {
-    height: 250px; 
+    height: 350px; 
     display: flex;
     flex-direction: column;
     margin: 5px;
   }
   
   .card-title {
-    height: 50px;
+    height: 70px;
     overflow: hidden; 
   }
   
@@ -114,12 +116,45 @@ h2{
 
   .favsNavBar{
     display: flex;
-    font-size: 30px;
+    font-size: 40px;
     justify-content: center;
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: none;
+    background: url("/assets/images/weather-background.png");
+    background-color: transparent !important;
+    color: white; 
+    text-size-adjust: 50px; 
+    text-align:center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+  }
+
+  .titleNavBar{
+    display: flex;
+    font-size: 40px;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: url("/assets/images/weather-background.png");
+    background-color: transparent !important;
+    color: white; 
+    text-size-adjust: 50px; 
+    text-align:center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+
   }
 
   .clearFavsBtn{
     display: none;
+  }
+
+  .closeForWiki{
+    color: orangered;
+  }
+
+  .weatherModalText{
+    justify-content: center;
+    display: inline;
   }
