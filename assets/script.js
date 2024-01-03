@@ -19,19 +19,19 @@ function initMap() {
         zoom: 8,
     });
 
-
-//marker set up
-var marker = new google.maps.Marker({
-    position: { lat: 0, lng: 0 },
-    map: map,
-    draggable: true, 
-    animation: google.maps.Animation.DROP 
-});
-
+    var marker = new google.maps.Marker({
+        position: { lat: 0, lng: 0 },
+        map: map,
+        draggable: true, 
+        animation: google.maps.Animation.DROP 
+    });
+   
 //event listener for click to output lat and lon
     map.addListener('click', function(event) {
         var latLng = event.latLng;
+        marker.setPosition(event.latLng);
         console.log('Latitude: ' + latLng.lat() + ', Longitude: ' + latLng.lng());
+    
         //calling the functions defined later within the event listener,
         fetchNearbyWikipediaEntries(latLng.lat(), latLng.lng(), 'ajayabt', handleWikiData);
 
@@ -185,7 +185,7 @@ function displayFavourites() {
     let favContainer = $('#favs');
     favContainer.empty();
     favourites.forEach(fav => {
-        let favCard = $('<div>').addClass('favourite-card card col-lg-3');
+        let favCard = $('<div>').addClass('favourite-card card col-lg-4');
         let favTitle = $('<h3>').addClass('card-title').text(fav.title);
 
         let favImageSrc = fav.imageUrl || 'path/to/your/placeholder.png';
