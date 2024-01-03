@@ -1,160 +1,160 @@
 #map {
-    height: 800px;
+  height: 800px;
 }
 
 .save-banner {
-    position: fixed;
-    top: 50px; 
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #4CAF50; 
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1000; 
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+  position: fixed;
+  top: 50px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4CAF50; 
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1000; 
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
 }
 
 #map {
-    height: 800px;
+  height: 800px;
 }
 
 
 p{ 
-    font-family: Arial, Helvetica, sans-serif;
-    color: #555;
-    font-weight: 400;
-    
+  font-family: Arial, Helvetica, sans-serif;
+  color: #555;
+  font-weight: 400;
+  
 }
 li{
-    font-family: Arial, Helvetica, sans-serif;
-    color: #555;
-    font-weight: 400;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #555;
+  font-weight: 400;
 }
 
 h2{
-    color: #555;
-    font-weight: 400;
+  color: #555;
+  font-weight: 400;
 }
 
 :root{
-    background-image: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
+  background-image: linear-gradient(0deg,#d8eeee,#d8eeee 25%,#64b3c9 65%,#005986 90%,#005986);
 
 }
 .Web-Title{
-    color: white; 
-    text-size-adjust: 50px; 
-    text-align:center
+  color: white; 
+  text-size-adjust: 50px; 
+  text-align:center
 }
 
 
 .fw-bold{
-    color: white; 
-    text-align:center
-    
+  color: white; 
+  text-align:center
+  
 }
 
 
 .jumboCopy{
-    justify-content: center;
+  justify-content: center;
 }
 
 .customNav {
-    position: fixed;
-    width: 100%;
-    background: url("/assets/images/weather-background.png");
-    background-color: transparent !important;
-    background-size: cover;
-    z-index: 20;
-    display: flex;
-    justify-content: center;
+  position: fixed;
+  width: 100%;
+  background: url("/assets/images/weather-background.png");
+  background-color: transparent !important;
+  background-size: cover;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
 }  
 
 .rockBackground {
-    height: calc(100vh - 25px);
-    background-image: url("/assets/images/weather-background.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
+  height: calc(100vh - 25px);
+  background-image: url("/assets/images/weather-background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .favourite-card {
-    height: 350px; 
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-  }
-  
-  .card-title {
-    height: 70px;
-    overflow: hidden; 
-  }
-  
-  .card-img-top {
-    flex-grow: 1; 
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat;
-  }
-  
-  
-  .card-img-top:empty {
-    background: url('/assets/images/weather-background.png') center center no-repeat;
-    background-size: cover;
-  }
+  height: 350px; 
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}
 
-  .favPlacesTitle{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    background-color: aqua;
-    padding: 10px;
-  }
+.card-title {
+  height: 70px;
+  overflow: hidden; 
+}
 
-  .favsNavBar{
-    display: flex;
-    font-size: 40px;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: none;
-    background: url("/assets/images/weather-background.png");
-    background-color: transparent !important;
-    color: white; 
-    text-size-adjust: 50px; 
-    text-align:center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 400;
-  }
+.card-img-top {
+  flex-grow: 1; 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+}
 
-  .titleNavBar{
-    display: flex;
-    font-size: 40px;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background: url("/assets/images/weather-background.png");
-    background-color: transparent !important;
-    color: white; 
-    text-size-adjust: 50px; 
-    text-align:center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 400;
 
-  }
+.card-img-top:empty {
+  background: url('/assets/images/weather-background.png') center center no-repeat;
+  background-size: cover;
+}
 
-  .clearFavsBtn{
-    display: none;
-  }
+.favPlacesTitle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  background-color: aqua;
+  padding: 10px;
+}
 
-  .closeForWiki{
-    color: orangered;
-  }
+.favsNavBar{
+  display: flex;
+  font-size: 40px;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: none;
+  background: url("/assets/images/weather-background.png");
+  background-color: transparent !important;
+  color: white; 
+  text-size-adjust: 50px; 
+  text-align:center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+}
 
-  .weatherModalText{
-    justify-content: center;
-    display: inline;
-  }
+.titleNavBar{
+  display: flex;
+  font-size: 40px;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: url("/assets/images/weather-background.png");
+  background-color: transparent !important;
+  color: white; 
+  text-size-adjust: 50px; 
+  text-align:center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+
+}
+
+.clearFavsBtn{
+  display: none;
+}
+
+.closeForWiki{
+  color: orangered;
+}
+
+.weatherModalText{
+  justify-content: center;
+  display: inline;
+}
