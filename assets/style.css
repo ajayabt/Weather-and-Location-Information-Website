@@ -62,7 +62,7 @@ h2{
 .customNav {
     position: fixed;
     width: 100%;
-    background: url("../assets/images/weather-background.png");
+    background: url("/assets/images/weather-background.png");
     background-color: transparent !important;
     background-size: cover;
     z-index: 20;
@@ -70,7 +70,7 @@ h2{
 
 .rockBackground {
     height: calc(100vh - 25px);
-    background-image: url("../assets/images/weather-background.png");
+    background-image: url("/assets/images/weather-background.png");
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
