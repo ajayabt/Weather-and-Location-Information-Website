@@ -78,4 +78,48 @@ h2{
     justify-content: center;
   }
   
+.favourite-card {
+    height: 250px; 
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+  }
+  
+  .card-title {
+    height: 50px;
+    overflow: hidden; 
+  }
+  
+  .card-img-top {
+    flex-grow: 1; 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+  }
+  
+  
+  .card-img-top:empty {
+    background: url('/assets/images/weather-background.png') center center no-repeat;
+    background-size: cover;
+  }
 
+  .favPlacesTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    background-color: aqua;
+    padding: 10px;
+  }
+
+  .favsNavBar{
+    display: flex;
+    font-size: 30px;
+    justify-content: center;
+    margin: 10px;
+    display: none;
+  }
+
+  .clearFavsBtn{
+    display: none;
+  }
