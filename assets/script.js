@@ -125,8 +125,8 @@ function displayWikipediaData(extract, imageUrl, title) {
     leftColumn.append(contentElement);
 
     // Right column
-    let rightColumn = $('<div>').addClass('col-md-6');
-    let imageElement = $('<img>').addClass('img-fluid').attr('src', imageUrl);
+    let rightColumn = $('<div>').addClass('col-md-6 d-flex flex-column align-items-center');
+    let imageElement = $('<img>').addClass('img-fluid mb-3').css('object-fit', 'cover').attr('src', imageUrl);
     rightColumn.append(imageElement);
 
     // Append columns to the card body
